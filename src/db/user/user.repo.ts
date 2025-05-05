@@ -1,6 +1,6 @@
 import { BaseRepo } from 'src/db/base.repo';
 import { TUser, User } from './user.model';
-import { Model } from 'mongoose';
+import { Model, ProjectionType, QueryOptions } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { Injectable } from '@nestjs/common';
 
@@ -12,6 +12,11 @@ export class UserRepo extends BaseRepo<TUser> {
     super(userModel);
   }
 
- 
-  
+  findByEmail(
+    email: string,
+    projection?: ProjectionType<TUser>,
+    options?: QueryOptions,
+  ) {
+    return this.findOne({ filter: { email }, projection, options });
+  }
 }
