@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Category, CategorySchema } from '../../db/models/category/category.model';
-import { CategoryRepo } from '../../db/models/category/category.repo';
+import { Category, CategorySchema } from '../../db/category/category.model';
+import { CategoryRepo } from '../../db/category/category.repo';
 import { CategoryService } from './category.service';
 import { CategoryController } from './category.controller';
 

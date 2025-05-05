@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { UserRepo } from 'src/db/models/user/user.repo';
+import { UserRepo } from 'src/db/user/user.repo';
 
 @Injectable()
 export class TokenService {
