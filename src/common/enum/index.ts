@@ -34,3 +34,9 @@ export enum EMAIL_SUBJECTS {
   EMAIL_CONFIRMATION = 'Email Confirmation',
   RESET_PASSWORD = 'Reset Password',
 }
+
+export enum CourseLevels {
+  BEGINNER = 'beginner',
+  INTERMEDIATE = 'intermediate',
+  ADVANCED = 'advanced',
+}

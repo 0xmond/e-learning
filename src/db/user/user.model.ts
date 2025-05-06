@@ -15,7 +15,12 @@ interface IOtp {
   expiresIn: Date;
 }
 
-@Schema({ timestamps: true })
+@Schema({
+  timestamps: true,
+  versionKey: false,
+  toJSON: { virtuals: true },
+  toObject: { virtuals: true },
+})
 export class User {
   @Prop({ required: true })
   firstName: string;
