@@ -26,9 +26,9 @@ export class CategoryService {
     }
   }
 
-  async findAll() {
+  async find() {
     try {
-      const categories = await this.categoryRepo.findAll();
+      const categories = await this.categoryRepo.find();
       return categories;
     } catch (error) {
       throw new InternalServerErrorException('An error occurred while fetching categories.')
@@ -37,7 +37,7 @@ export class CategoryService {
 
   async findOne(id: Types.ObjectId) {
     try {
-      const category = await this.categoryRepo.findById(id);
+      const category = await this.categoryRepo.findOne({ filter: { _id: id } });
       if (!category) throw new NotFoundException('Category not found.')
       return category;
     } catch (error) {
@@ -46,9 +46,10 @@ export class CategoryService {
     }
   }
 
-  async update(id: Types.ObjectId, updateData: { name: string; description?: string }) {
+  async updateOne(id: Types.ObjectId, updateData: { name: string; description?: string }) {
     try {
-      const updatedCategory = await this.categoryRepo.update(id, updateData);
+      const updatedCategory = await this.categoryRepo.updateOne({ filter: { _id: id }, update: updateData });
+
       if (!updatedCategory) throw new NotFoundException('Cannot update a non-existing category.')
       return updatedCategory;
     } catch (error) {
@@ -57,9 +58,9 @@ export class CategoryService {
     }
   }
 
-  async remove(id: Types.ObjectId) {
+  async deleteOne(id: Types.ObjectId) {
     try {
-      const deleted = await this.categoryRepo.remove(id);
+      const deleted = await this.categoryRepo.deleteOne(id);
       if (!deleted) throw new NotFoundException('Cannot delete a non-existing category.');
       return { message: 'Category deleted successfully.' }
     } catch (error) {

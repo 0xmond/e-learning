@@ -137,24 +137,55 @@ export class AuthService {
     return;
   }
 
+  // async resetPassword(resetPasswordDto: ResetPasswordDto) {
+  //   const { email, otp, newPassword } = resetPasswordDto;
+
+  //   const user = await this.userRepo.findByEmail(email);
+
+  //   if (!user) throw new NotFoundException(Messages.user.notFound);
+
+  //   const isValidOTP = this.confirmOtp(user, otp, OTP_TYPE.FORGET_PASSWORD);
+
+  //   if (!isValidOTP) throw new BadRequestException(Messages.otp.isInvalid);
+
+  //   await user.updateOne({
+  //     password: hash(newPassword),
+  //     $pull: {
+  //       otp: { code: user.otp.map((o) => compare(otp, o.code)) },
+  //     },
+  //   });
+
+  //   return;
+  // }
   async resetPassword(resetPasswordDto: ResetPasswordDto) {
     const { email, otp, newPassword } = resetPasswordDto;
-
+  
     const user = await this.userRepo.findByEmail(email);
-
+  
     if (!user) throw new NotFoundException(Messages.user.notFound);
-
-    const isValidOTP = this.confirmOtp(user, otp, OTP_TYPE.FORGET_PASSWORD);
-
-    if (!isValidOTP) throw new BadRequestException(Messages.otp.isInvalid);
-
-    await user.updateOne({
-      password: hash(newPassword),
-      $pull: {
-        otp: { code: user.otp.map((o) => compare(otp, o.code)) },
-      },
-    });
-
-    return;
+  
+    const otpRecord = user.otp.find(
+      (o) => o.code === otp && o.otpType === OTP_TYPE.FORGET_PASSWORD
+    );
+  
+    if (!otpRecord) {
+      throw new BadRequestException(Messages.otp.isInvalid); 
+    }
+  
+    if (new Date(otpRecord.expiresIn) < new Date()) {
+      throw new BadRequestException('OTP has expired'); 
+    }
+  
+    user.password = hash(newPassword);
+  
+    user.otp = user.otp.filter((o) => o.code !== otp);
+  
+    await user.save();
+  
+    return {
+      success: true,
+      message: 'Password reset successfully',
+    };
   }
+  
 }

@@ -1,7 +1,9 @@
-import { Body, Controller, Post, Get, Param, Put, Delete } from '@nestjs/common';
+import { Body, Controller, Post, Get, Param, Put, Delete ,UseGuards} from '@nestjs/common';
 import { CategoryService } from './category.service';
 import { Types } from 'mongoose';
+import { AuthGuard } from 'src/common/guards/auth.guard';
 
+UseGuards(AuthGuard)
 @Controller('categories')
 export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
@@ -20,7 +22,7 @@ export class CategoryController {
 
   @Get()
   async getAllCategories() {
-    return this.categoryService.findAll()
+    return this.categoryService.find()
   }
 
   @Get(':id')
@@ -35,12 +37,12 @@ export class CategoryController {
     @Body() body: { name: string; description?: string }
   ) {
     const categoryId = new Types.ObjectId(id)
-    return this.categoryService.update(categoryId, body)
+    return this.categoryService.updateOne(categoryId, body)
   }
 
   @Delete(':id')
   async deleteCategory(@Param('id') id: string) {
     const categoryId = new Types.ObjectId(id)
-    return this.categoryService.remove(categoryId)
+    return this.categoryService.deleteOne(categoryId)
   }
 }
