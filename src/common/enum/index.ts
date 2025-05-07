@@ -23,6 +23,7 @@ export const Messages = {
   },
   otp: { isInvalid: 'Invalid OTP' },
   email: { isSent: 'Email is sent successfully. Please check your inbox' },
+  course: getMessages('Course'),
 };
 
 export enum OTP_TYPE {

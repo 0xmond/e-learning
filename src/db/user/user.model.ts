@@ -1,12 +1,11 @@
 import { MongooseModule, Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Document, HydratedDocument } from 'mongoose';
 import { UserRoles } from 'src/common/enum';
-
-export type TUser = User & Document;
 
 export interface IImage {
   secure_url: string;
   public_id: string;
+  folderId: string;
 }
 
 interface IOtp {
@@ -64,6 +63,9 @@ export class User {
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
+
+export type TUser = HydratedDocument<User> & Document;
+
 export const UserModel = MongooseModule.forFeature([
   { name: User.name, schema: UserSchema },
 ]);

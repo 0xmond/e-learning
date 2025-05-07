@@ -1,5 +1,5 @@
 import { MongooseModule, Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Types } from 'mongoose';
+import { Document, HydratedDocument, SchemaTypes, Types } from 'mongoose';
 import { CourseLevels } from 'src/common/enum';
 import { IImage, User } from '../user/user.model';
 import { Category } from '../category/category.model';
@@ -24,12 +24,12 @@ export class Course {
     },
     required: true,
   })
-  thumbnailUrl: IImage;
+  thumbnail: IImage;
 
-  @Prop({ type: Types.ObjectId, ref: User.name, required: true })
+  @Prop({ type: SchemaTypes.ObjectId, ref: User.name, required: true })
   instructor: Types.ObjectId;
 
-  @Prop({ type: Types.ObjectId, ref: Category.name, required: true })
+  @Prop({ type: SchemaTypes.ObjectId, ref: Category.name, required: true })
   category: Types.ObjectId;
 
   @Prop({
@@ -54,7 +54,7 @@ export class Course {
 
 export const courseSchema = SchemaFactory.createForClass(Course);
 
-export type TCourse = Course & Document;
+export type TCourse = HydratedDocument<Course> & Document;
 
 export const CourseModel = MongooseModule.forFeature([
   { name: Course.name, schema: courseSchema },

@@ -1,5 +1,5 @@
 import { MongooseModule, Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Types } from 'mongoose';
+import { Document, HydratedDocument, Types } from 'mongoose';
 import { Course } from '../course/course.model';
 
 @Schema({
@@ -10,7 +10,7 @@ import { Course } from '../course/course.model';
 })
 export class Section {
   @Prop({ type: Types.ObjectId, ref: Course.name, required: true })
-  courseId: Types.ObjectId;
+  course: Types.ObjectId;
 
   @Prop({ required: true, trim: true })
   title: string;
@@ -24,7 +24,7 @@ export class Section {
 
 export const sectionSchema = SchemaFactory.createForClass(Section);
 
-export type TSection = Section & Document;
+export type TSection = HydratedDocument<Section> & Document;
 
 export const SectionModel = MongooseModule.forFeature([
   { name: Section.name, schema: sectionSchema },

@@ -1,7 +1,5 @@
 import { Schema, SchemaFactory, Prop, MongooseModule } from '@nestjs/mongoose';
-import { Document, SchemaTypes, Types } from 'mongoose';
-
-export type TCategory = Category & Document;
+import { Document, HydratedDocument, SchemaTypes, Types } from 'mongoose';
 
 @Schema({
   timestamps: true,
@@ -21,6 +19,7 @@ export class Category {
 }
 
 export const CategorySchema = SchemaFactory.createForClass(Category);
+export type TCategory = HydratedDocument<Category> & Document;
 export const CategoryModel = MongooseModule.forFeature([
   { name: Category.name, schema: CategorySchema },
 ]);
