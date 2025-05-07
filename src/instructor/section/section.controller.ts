@@ -1,11 +1,19 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from "@nestjs/common";
-import { sectionService } from "./section.service";
-import { createSectionDto, updateSectionDto } from "./dto";
-import { Types } from "mongoose";
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
+import { SectionService } from './section.service';
+import { createSectionDto, updateSectionDto } from './dto';
+import { Types } from 'mongoose';
 
-@Controller("/section")
+@Controller('/section')
 export class SectionController {
-  constructor(private readonly sectionService: sectionService) {}
+  constructor(private readonly sectionService: SectionService) {}
 
   @Post()
   async create(@Body() dto: createSectionDto) {
@@ -39,7 +47,10 @@ export class SectionController {
 
   @Patch(':id')
   async update(@Param('id') id: string, @Body() dto: updateSectionDto) {
-    const updated = await this.sectionService.update(new Types.ObjectId(id), dto);
+    const updated = await this.sectionService.update(
+      new Types.ObjectId(id),
+      dto,
+    );
     return {
       message: 'Section updated successfully',
       statusCode: 200,
