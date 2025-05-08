@@ -4,6 +4,13 @@ export enum UserRoles {
   INSTRUCTOR = 'instructor',
 }
 
+export enum LessonType {
+  VIDEO = 'video',
+  ARTICLE = 'article',
+  QUIZ = 'quiz',
+  ASSIGNMENT = 'assignment',
+}
+
 const getMessages = (entity: string) => {
   return {
     notFound: `${entity} is not found`,

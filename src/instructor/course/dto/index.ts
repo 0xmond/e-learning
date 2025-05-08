@@ -53,6 +53,10 @@ export class CreateCourseDto {
 
   @IsBoolean()
   isPublished?: boolean;
+
+  // @IsOptional()
+  // @IsNumber()
+  // rating?: number;
 }
 
 export class UpdateCourseDto {

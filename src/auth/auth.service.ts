@@ -38,6 +38,8 @@ export class AuthService {
       firstName: signupDto.firstName,
       lastName: signupDto.lastName,
       password: hash(signupDto.password),
+      // role: signupDto.role ,
+
       otp: [
         {
           code: hash(otp),
