@@ -1,10 +1,13 @@
 import {
   IsAlphanumeric,
   IsEmail,
+  IsEnum,
   IsNotEmpty,
+  IsOptional,
   IsString,
   MinLength,
 } from 'class-validator';
+import { UserRoles } from 'src/common/enum';
 
 export class SignupDto {
   @IsString()
@@ -21,6 +24,10 @@ export class SignupDto {
   @IsString()
   @IsNotEmpty()
   password: string;
+
+  // @IsOptional()
+  // @IsEnum(UserRoles)
+  // role?: UserRoles;
 }
 
 export class LoginDto {
