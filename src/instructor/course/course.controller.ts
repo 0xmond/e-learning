@@ -23,7 +23,7 @@ export class CourseController {
   constructor(private readonly courseService: CourseService) {}
 
   @Post()
-  @Auth(UserRoles.INSTRUCTOR)
+  // @Auth(UserRoles.INSTRUCTOR)
   async create(
     @Body() createCourseDto: CreateCourseDto,
     @CurrentUser() user: TUser,
