@@ -10,7 +10,7 @@ import { Course } from '../course/course.model';
 })
 export class Section {
   @Prop({ type: Types.ObjectId, ref: Course.name, required: true })
-  course: Types.ObjectId;
+  courseId: Types.ObjectId;
 
   @Prop({ required: true, trim: true })
   title: string;
